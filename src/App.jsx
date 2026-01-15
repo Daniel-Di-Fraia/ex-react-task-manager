@@ -10,19 +10,26 @@ import AddTask from './Pages/AddTask'
 import HomePage from './Pages/HomePage';
 import NavBar from './components/NavBar';
 
+//importo il provider
+import { TasksProvider } from './context/TaskContext';
+
 function App() {
-  
+
 
   return (
     <>
-      <BrowserRouter>
-      <NavBar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/TaskList" element={<TaskList />} />
-          <Route path="/AddTask" element={<AddTask />} />
-        </Routes>
-      </BrowserRouter>
+    {/* avvolgo tutto app per rendere disponibili i dati in context */}
+      <TasksProvider>
+        {/* rotte applicazione */}
+        <BrowserRouter>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/TaskList" element={<TaskList />} />
+            <Route path="/AddTask" element={<AddTask />} />
+          </Routes>
+        </BrowserRouter>
+      </TasksProvider>
     </>
   )
 }
