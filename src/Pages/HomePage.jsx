@@ -4,7 +4,7 @@ function HomePage() {
 
   return (
     <>
-      <h1>Sono la HomePage</h1>
+      <h1>Benvenuto nel tuo gestore di tasks personale</h1>
     </>
   )
 }

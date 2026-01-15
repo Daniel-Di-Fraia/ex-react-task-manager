@@ -1,0 +1,15 @@
+.taks-row{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-task{
+    border: white, 1px, solid;
+}
+
+.table-width {
+    width: 40%;
+    padding-top: 40px;
+}

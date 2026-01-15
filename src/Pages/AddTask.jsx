@@ -4,7 +4,7 @@ function AddTask() {
 
   return (
     <>
-      <h1>Sono l'AddTask</h1>
+      <h1>Aggiungi una nuova task</h1>
     </>
   )
 }
