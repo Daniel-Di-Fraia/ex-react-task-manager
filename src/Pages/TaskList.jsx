@@ -2,7 +2,7 @@
 import TaskRow from "../components/TaskRow";
 
 //importo variabile globale, risultato da chiamata api
-import { useTasks } from "../context/TaskContext";
+import { useGlobalTasks } from "../context/TaskContext";
 
 //import del relativo css
 import './TaskList.css';
@@ -10,7 +10,7 @@ import './TaskList.css';
 
 function TaskList() {
 
-  const { tasks } = useTasks();
+  const { tasks } = useGlobalTasks();
 
   return (
     <>
