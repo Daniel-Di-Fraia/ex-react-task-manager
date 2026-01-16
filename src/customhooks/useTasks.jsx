@@ -9,11 +9,31 @@ export default function useTasks() {
 
     // richiamo variabile di ambiente
     const url = import.meta.env.VITE_API_URL;
-    
+
     //funzione per aggiungere tasks
-    const addTask = () => {
-        console.log('task aggiunta!');
-    }
+    const addTask = async (newTask) => {
+        try {
+            const response = await fetch(`${url}/tasks`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newTask) // Trasformo l'oggetto in testo
+            });
+
+            const data = await response.json(); //risposta server
+
+            if (data.success) {
+
+                setTasks((prev) => [...prev, data.task]);
+            } else {
+                throw new Error(data.message);
+            }
+        } catch (err) {
+            throw err;
+        }
+    };
+
 
     //funzione per rimuovere tasks
     const removeTask = () => {

@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useGlobalTasks } from "../context/TaskContext";
 
 //import il relativo css
 import './AddTask.css'
@@ -12,6 +13,9 @@ function AddTask() {
   const statusRef = useRef();
   const descriptionRef = useRef();
 
+  // Estraiamo la funzione addTask dal contesto globale
+  const { addTask } = useGlobalTasks();
+
   const symbols = "!@#$%^&*()-_=+[]{}|;:',.<>?/`~";
 
   //controllo se il titolo è valido, non deve contenere simboli
@@ -22,25 +26,34 @@ function AddTask() {
   }
 
   //funzione per gestire il submit del form
-  const handleSubmit = (e) => {
-
-    let dati = "";
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    //Controllo validità
     if (!isTitleValid()) {
-      dati =
-        `Titolo: ${titolo} 
-      Stato: ${statusRef.current.value} 
-      Descrizione: ${descriptionRef.current.value}`
-      console.log(dati);
+
+      // oggetto con i dati aggiornati da utente
+      const newTask = {
+        title: titolo,
+        description: descriptionRef.current.value,
+        status: statusRef.current.value
+      };
+
+      try {
+
+        await addTask(newTask);
+
+        alert("Task creata con successo!");
+        setTitolo("");
+        statusRef.current.value = "";
+        descriptionRef.current.value = "";
+      } catch (err) {
+        alert("Errore: " + err.message);
+      }
+
     } else {
-      alert('inserisci un titolo corretto per la task')
+      alert('Il titolo non deve contenere simboli speciali');
     }
-
-    setTitolo("");
-    statusRef.current.value = "";
-    descriptionRef.current.value = "";
-
   };
 
   return (
