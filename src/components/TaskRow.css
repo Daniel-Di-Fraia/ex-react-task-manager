@@ -15,3 +15,15 @@
     color: black;
     font-weight: 700;
 }
+
+tr {
+    font-size: 25px;
+}
+
+td a {
+    color: white;
+}
+
+td a:hover {
+    color: #535BF2;
+}

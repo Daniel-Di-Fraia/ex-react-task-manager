@@ -3,7 +3,7 @@ import './TaskRow.css'
 
 //importo memo
 import { memo } from 'react';
-
+import { Link } from 'react-router-dom';
 const TaskRow = memo(function TaskRow({ task }) {
 
     //mappa per colore e valore corrispondente
@@ -18,7 +18,13 @@ const TaskRow = memo(function TaskRow({ task }) {
 
     return (
         <tr>
-            <td className="table-task">{task.title}</td>
+
+            <td className="table-task title-table">
+                <Link to={`/TaskList/${task.id}`}>
+                    {task.title}
+                </Link>
+            </td>
+
             <td className={`${colorClass} table-task black-font`}>
                 {task.status}
             </td>
