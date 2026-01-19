@@ -1,5 +1,5 @@
 //importo useparams da react router dom
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 //importo il context
 import { useGlobalTasks } from "../context/TaskContext";
@@ -11,7 +11,11 @@ export default function TaskDetail() {
     const { id } = useParams();
 
     //Recupero i task dal context
-    const { tasks } = useGlobalTasks();
+    // Estraggo la funzione remove task dal contesto globale
+    const { tasks, removeTask } = useGlobalTasks();
+
+    //navigatore 
+    const navigate = useNavigate();
 
     // Cerca il task specifico che corrisponde all'id dell'URL
     const task = tasks.find(t => String(t.id) === id);
@@ -21,10 +25,18 @@ export default function TaskDetail() {
         return <h1>Task non trovato!</h1>;
     }
 
-    const deleteTask = () => {
-        console.log("elimino task");
-    }
-
+    const handleDelete = async () => {
+        try {
+            await removeTask(task.id);
+            //conferma eliminazione
+            alert('Task eliminata con successo!');
+            //rendirizzo l utente alla lista
+            navigate('/TaskList');
+        } catch (err) {
+            alert('Errore: ' + err.message);
+        }
+    };
+    
     return (
         <>
             <h1>Task numero: {id}</h1>
@@ -36,7 +48,7 @@ export default function TaskDetail() {
                     <li><strong>Creato il:</strong> {task.createdAt}</li>
                 </ul>
                 <div>
-                    <button onClick={deleteTask} id="delete-btn">Elimina Task</button>
+                    <button onClick={handleDelete} id="delete-btn">Elimina Task</button>
                     <Link to="/TaskList">
                         <button>Torna alla lista</button>
                     </Link>

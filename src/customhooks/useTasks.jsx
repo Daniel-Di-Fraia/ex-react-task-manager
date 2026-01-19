@@ -36,9 +36,29 @@ export default function useTasks() {
 
 
     //funzione per rimuovere tasks
-    const removeTask = () => {
-        console.log('task rimossa!');
-    }
+    const removeTask = async (id) => {
+        try {
+            const response = await fetch(`${url}/tasks/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            //risposta server
+            const data = await response.json();
+
+            if (data.success) {
+                //Rimuovo il task dallo stato globale filtrando per ID
+                setTasks((prevTasks) => prevTasks.filter(task => task.id !== id));
+            } else {
+                //Se success è false, lancio l'errore con il messaggio del server
+                throw new Error(data.message);
+            }
+        } catch (err) {
+            throw err;
+        }
+    };
 
     //funzione per modificare tasks
     const updateTask = () => {
