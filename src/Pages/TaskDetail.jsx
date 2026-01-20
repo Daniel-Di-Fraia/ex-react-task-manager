@@ -13,16 +13,20 @@ import "./TaskDetail.css"
 //importo la modale di conferma
 import Modal from '../components/Modal';
 
+//importo la modale di modifica
+import EditTaskModal from '../components/EditTaskModal';
+
 export default function TaskDetail() {
 
     const { id } = useParams();
 
     //Recupero i task dal context
     // Estraggo la funzione remove task dal contesto globale
-    const { tasks, removeTask } = useGlobalTasks();
+    const { tasks, removeTask, updateTask } = useGlobalTasks();
 
     //variabile di stato per gestire visibilità modale
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     //navigatore 
     const navigate = useNavigate();
@@ -52,7 +56,19 @@ export default function TaskDetail() {
             alert('Errore: ' + err.message);
         }
     };
-    
+
+    //funzione per salvare le modifiche della task
+    const handleSave = async (updatedData) => {
+        try {
+            await updateTask(updatedData, task.id);
+            alert('Modifica avvenuta con successo!');
+            // Chiude la modale
+            setIsEditModalOpen(false);
+        } catch (err) {
+            alert('Errore durante la modifica: ' + err.message);
+        }
+    }
+
     return (
         <>
             <h1>Task numero: {id}</h1>
@@ -64,21 +80,31 @@ export default function TaskDetail() {
                     <li><strong>Creato il:</strong> {task.createdAt}</li>
                 </ul>
                 <div>
-                    <button onClick={()=> setIsModalOpen(true)} id="delete-btn">Elimina Task</button>
+                    <button onClick={() => setIsModalOpen(true)} className="margin-btn">Elimina Task</button>
                     <Link to="/TaskList">
-                        <button>Torna alla lista</button>
+                        <button className="margin-btn" >Torna alla lista</button>
                     </Link>
+                    {/*bottone Modifica */}
+                    <button onClick={() => setIsEditModalOpen(true)}>Modifica Task</button>
                 </div>
             </section>
 
             {/* componente modale con i relativi props */}
-            <Modal 
+            <Modal
                 show={isModalOpen}
                 title="Conferma Eliminazione"
                 content={`Sei sicuro di voler eliminare la task: "${task.title}"?`}
-                onClose={()=> setIsModalOpen(false)}
+                onClose={() => setIsModalOpen(false)}
                 onConfirm={handleConfirmDelete}
                 onConfrimText="Task Eliminata!"
+            />
+
+            {/* Nuova Modale Modifica */}
+            <EditTaskModal
+                show={isEditModalOpen}
+                task={task}
+                onClose={() => setIsEditModalOpen(false)}
+                onSave={handleSave}
             />
         </>
     );

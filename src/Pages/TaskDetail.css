@@ -19,6 +19,6 @@
     box-sizing: border-box;    
 }
 
-#delete-btn {
+.margin-btn {
     margin-right: 40px;
 }

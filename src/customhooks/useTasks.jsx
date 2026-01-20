@@ -61,8 +61,27 @@ export default function useTasks() {
     };
 
     //funzione per modificare tasks
-    const updateTask = () => {
-        console.log('task modificata!');
+    const updateTask = async (updatedTask, id) => {
+        try {
+            const response = await fetch(`${url}/tasks/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedTask) 
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+
+                setTasks(prev => prev.map(t => t.id === data.task.id ? data.task : t));
+            } else {
+                throw new Error(data.message);
+            }
+        } catch (err) {
+            throw err;
+        }
     }
 
     //funzione per chiamata api
