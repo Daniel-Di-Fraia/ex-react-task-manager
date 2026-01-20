@@ -44,7 +44,8 @@ export default function EditTaskModal({ show, onClose, task, onSave }) {
                 <label>Descrizione:</label>
                 <textarea 
                     value={description} 
-                    onChange={(e) => setDescription(e.target.value)} 
+                    onChange={(e) => setDescription(e.target.value)}
+                    id="text-desc"
                 />
             </div>
             <div className="form-group">
