@@ -13,3 +13,11 @@
     width: 55%;
     padding-top: 40px;
 }
+
+th {
+    cursor: pointer;
+}
+
+th:hover {
+    color: greenyellow;
+}
