@@ -80,13 +80,13 @@ export default function TaskDetail() {
                     <li><strong>Creato il:</strong> {task.createdAt}</li>
                 </ul>
                 <div>
-                    <button onClick={() => setIsModalOpen(true)} className="margin-btn">Elimina Task</button>
-                    <Link to="/TaskList">
-                        <button className="margin-btn" >Torna alla lista</button>
-                    </Link>
+                    <button onClick={() => setIsModalOpen(true)} className="margin-btn btn">Elimina Task</button>
                     {/*bottone Modifica */}
-                    <button onClick={() => setIsEditModalOpen(true)}>Modifica Task</button>
+                    <button onClick={() => setIsEditModalOpen(true)} className='btn'>Modifica Task</button>
                 </div>
+                <Link to="/TaskList">
+                    <button className='btn'>Torna alla lista</button>
+                </Link>
             </section>
 
             {/* componente modale con i relativi props */}

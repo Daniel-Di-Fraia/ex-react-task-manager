@@ -22,3 +22,8 @@
 .margin-btn {
     margin-right: 40px;
 }
+
+.btn {
+    width: 170px;
+    height: 60px;
+}
