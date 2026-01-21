@@ -1,15 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
 import Modal from './Modal';
 
-export default function EditTaskModal({ show, onClose, task, onSave }) {
-    const editFormRef = useRef(null); // Riferimento per il submit manuale [web:4]
+//importo il relativo css
+import './EditTaskModal.css';
 
-    // Stati controllati per i campi del form
+export default function EditTaskModal({ show, onClose, task, onSave }) {
+    const editFormRef = useRef(null);
+
+    //Stati controllati per i campi del form
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [status, setStatus] = useState('To do');
 
-    // Sincronizza i campi quando il task cambia o la modale si apre
+    //Sincronizzo i campi quando il task cambia o la modale si apre
     useEffect(() => {
         if (task && show) {
             setTitle(task.title);
@@ -20,7 +23,7 @@ export default function EditTaskModal({ show, onClose, task, onSave }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Passiamo l'oggetto aggiornato alla funzione onSave [web:8]
+        // Passiamo l'oggetto aggiornato alla funzione onSave
         onSave({ 
             title, 
             description, 
@@ -28,7 +31,7 @@ export default function EditTaskModal({ show, onClose, task, onSave }) {
         });
     };
 
-    // Definiamo il contenuto da passare alla modale
+    //Definiamo il contenuto da passare alla modale
     const formContent = (
         <form ref={editFormRef} onSubmit={handleSubmit} className="edit-form">
             <div className="form-group">
@@ -64,9 +67,9 @@ export default function EditTaskModal({ show, onClose, task, onSave }) {
             show={show}
             onClose={onClose}
             title="Modifica Task"
-            content={formContent} // Passiamo il form come contenuto
+            content={formContent}
             confirmText="Salva"
-            // Attiva il submit del form tramite la ref [web:4]
+            //Attivo il submit dl form tramite la ref
             onConfirm={() => editFormRef.current.requestSubmit()}
         />
     );
