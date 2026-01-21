@@ -28,7 +28,7 @@ const TaskRow = memo(function TaskRow({ task }) {
             <td className={`${colorClass} table-task black-font`}>
                 {task.status}
             </td>
-            <td className="table-task">{task.createdAt}</td>
+            <td className="table-task">{new Date(task.createdAt).toLocaleDateString()}</td>
         </tr >
     );
 });

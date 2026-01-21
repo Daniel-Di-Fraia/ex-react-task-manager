@@ -27,3 +27,8 @@ th:hover {
     height: 40px;
     width: 520px;
 }
+
+td {
+    padding: 10px 0;
+    width: 20%;
+}

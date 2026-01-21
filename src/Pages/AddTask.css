@@ -38,3 +38,11 @@ label {
     margin-bottom: 8px;
     font-weight: 600;
 }
+
+form {
+    background-color: rgb(70, 70, 70);
+    padding-bottom: 40px;
+    width: 35%;
+    margin: 40px auto;
+    border-radius: 20px;
+}
