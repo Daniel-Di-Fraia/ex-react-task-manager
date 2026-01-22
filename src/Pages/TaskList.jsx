@@ -17,6 +17,17 @@ const orderingStatus = {
   "Done": 3
 };
 
+//funzione debounce generica
+function debounce(callback, delay){
+  let timer;
+  return(value)=>{
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      callback(value);
+    }, delay);
+  }
+}
+
 
 function TaskList() {
 
@@ -31,6 +42,8 @@ function TaskList() {
 
   //variabile di stato per ricerca
   const [search, setSearch] = useState('');
+
+  const debounceSearch = useCallback(debounce(setSearch, 500));
 
   //funzione al click intestazione colonna lista task
   const handleOrder = (nomeColonna) => {
@@ -73,20 +86,20 @@ function TaskList() {
   }, [tasks, sortBy, sortOrder, search]);
 
   //useRef per tenere in memoria l id del timer tra i render
-  const timeoutRef = useRef(null);
+  // const timeoutRef = useRef(null);
 
-  const handleSearchTime = useCallback((e) => {
-    const value = e.target.value;
+  // const handleSearchTime = useCallback((e) => {
+  //   const value = e.target.value;
 
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
+  //   if (timeoutRef.current) {
+  //     clearTimeout(timeoutRef.current);
+  //   }
 
-    timeoutRef.current = setTimeout(() => {
-      setSearch(value);
-    }, 500);
+  //   timeoutRef.current = setTimeout(() => {
+  //     setSearch(value);
+  //   }, 500);
 
-  }, []);
+  // }, []);
 
   return (
     <>
@@ -95,7 +108,7 @@ function TaskList() {
         <input
           type="text"
           placeholder="Cerca una task..."
-          onChange={handleSearchTime}
+          onChange={(e) => debounceSearch(e.target.value)}
           className="search-input"
         />
 
